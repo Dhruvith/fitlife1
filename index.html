@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitLife - Your Fitness Journey Starts Here</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #50c878;
+            --accent-color: #ff6b6b;
+            --dark-color: #2c3e50;
+            --light-color: #f4f4f4;
+            --text-color: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            overflow-x: hidden;
+            background-color: var(--light-color);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+
+        header.scrolled {
+            background-color: rgba(44, 62, 80, 0.9);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            color: var(--light-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://source.unsplash.com/1600x900/?fitness') no-repeat center center/cover;
+            color: var(--light-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1s ease 0.3s forwards;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--light-color);
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            text-decoration: none;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1s ease 0.6s forwards;
+        }
+
+        .btn:hover {
+            background-color: #3a7bd5;
+            transform: translateY(-5px);
+        }
+
+        .features {
+            padding: 80px 0;
+            background-color: var(--light-color);
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: var(--dark-color);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-card i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+
+        .bmi-calculator {
+            padding: 80px 0;
+            background-color: var(--secondary-color);
+            color: var(--light-color);
+        }
+
+        .bmi-calculator h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+        }
+
+        .bmi-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bmi-form input {
+            margin-bottom: 20px;
+            padding: 10px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .bmi-result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .testimonials {
+            padding: 80px 0;
+            background-color: var(--light-color);
+            overflow: hidden;
+        }
+
+        .testimonials h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: var(--dark-color);
+        }
+
+        .testimonial-slider {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .testimonial-slide {
+            flex: 0 0 100%;
+            padding: 20px;
+        }
+
+        .testimonial-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .testimonial-content img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-content p {
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-content h4 {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .scrolling-text {
+            background-color: var(--accent-color);
+            color: var(--light-color);
+            padding: 10px 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .scrolling-text-content {
+            display: inline-block;
+            padding-left: 100%;
+            animation: scroll-left 20s linear infinite;
+        }
+
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .floating-image {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: url('https://source.unsplash.com/150x150/?fitness-equipment') no-repeat center center/cover;
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .animated-title {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .animated-title::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--primary-color);
+            overflow: hidden;
+            white-space: nowrap;
+            width: 0;
+            transition: width 0.5s ease;
+        }
+
+        .animated-title:hover::after {
+            width: 100%;
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .floating-image {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">FitLife</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#bmi">BMI Calculator</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1 class="animated-title" data-text="Transform Your Body, Transform Your Life">Transform Your Body, Transform Your Life</h1>
+                <p>Join FitLife today and start your journey to a healthier, stronger you.</p>
+                <a href="#" class="btn">Get Started</a>
+            </div>
+            <div class="floating-image"></div>
+        </section>
+
+        <div class="scrolling-text">
+            <div class="scrolling-text-content">
+                Join FitLife now and get 20% off your first month! Limited time offer. Don't miss out on this amazing deal!
+            </div>
+        </div>
+
+        <section id="features" class="features">
+            <div class="container">
+                <h2 class="animated-title" data-text="Why Choose FitLife?">Why Choose FitLife?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-dumbbell"></i>
+                        <h3>Expert Trainers</h3>
+                        <p>Our certified trainers will guide you every step of the way.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-heart"></i>
+                        <h3>Personalized Plans</h3>
+                        <p>Get a workout and nutrition plan tailored to your goals.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-users"></i>
+                        <h3>Supportive Community</h3>
+                        <p>Join a community of like-minded individuals on the same journey.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="bmi" class="bmi-calculator">
+            <div class="container">
+                <h2 class="animated-title" data-text="BMI Calculator">BMI Calculator</h2>
+                <form class="bmi-form">
+                    <input type="number" id="weight" placeholder="Weight (kg)" required>
+                    <input type="number" id="height" placeholder="Height (cm)" required>
+                    <button type="submit" class="btn">Calculate BMI</button>
+                </form>
+                <div class="bmi-result"></div>
+            </div>
+        </section>
+
+        <section id="testimonials" class="testimonials">
+            <div class="container">
+                <h2 class="animated-title" data-text="Success Stories">Success Stories</h2>
+                <div class="testimonial-slider">
+                    <div class="testimonial-slide">
+                        <div class="testimonial-content">
+                            <img src="https://source.unsplash.com/100x100/?portrait" alt="John Doe">
+                            <p>"FitLife changed my life! I've lost 30 pounds and feel better than ever."</p>
+                            <h4>John Doe</h4>
+                        </div>
+                    </div>
+                    <div class="testimonial-slide">
+                        <div class="testimonial-content">
+                            <img src="https://source.unsplash.com/100x100/?woman" alt="Jane Smith">
+                            <p>"The personalized plan and support from the trainers made all the difference."</p>
+                            <h4>Jane Smith</h4>
+                        </div>
+                    </div>
+                    <div class="testimonial-slide">
+                        <div class="testimonial-content">
+                            <img src="https://source.unsplash.com/100x100/?man" alt="Mike Johnson">
+                            <p>"I've tried many fitness programs, but FitLife is by far the best."</p>
+                            <h4>Mike Johnson</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 FitLife. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" 
+    crossorigin="anonymous"></script>
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Parallax effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.hero');
+            parallax.style.backgroundPositionY = `${scrolled * 0.5}px`;
+        });
+
+        // Header background change on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            header.classList.toggle('scrolled', window.scrollY > 0);
+        });
+
+        // BMI Calculator
+        const bmiForm = document.querySelector('.bmi-form');
+        const bmiResult = document.querySelector('.bmi-result');
+
+        bmiForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const weight = document.getElementById('weight').value;
+            const height = document.getElementById('height').value / 100; // Convert cm to m
+            const bmi = (weight / (height * height)).toFixed(1);
+            let category;
+
+            if (bmi < 18.5) category = 'Underweight';
+            else if (bmi < 25) category = 'Normal weight';
+            else if (bmi < 30) category = 'Overweight';
+            else category = 'Obese';
+
+            bmiResult.innerHTML = `Your BMI is ${bmi}. Category: ${category}`;
+        });
+
+        // Testimonial slider
+        const slider = document.querySelector('.testimonial-slider');
+        const slides = document.querySelectorAll('.testimonial-slide');
+        let currentSlide = 0;
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlider();
+        }
+
+        function updateSlider() {
+            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        setInterval(nextSlide, 5000);
+
+        // Floating image animation
+        const floatingImage = document.querySelector('.floating-image');
+        let floatX = 0;
+        let floatY = 0;
+        let floatAngle = 0;
+
+        function animateFloat() {
+            floatAngle += 0.02;
+            floatX = Math.sin(floatAngle) * 30;
+            floatY = Math.cos(floatAngle) * 15;
+
+            floatingImage.style.transform = `translate(${floatX}px, ${floatY}px)`;
+
+            requestAnimationFrame(animateFloat);
+        }
+
+        animateFloat();
+
+        // Feature card hover effect
+        const featureCards = document.querySelectorAll('.feature-card');
+
+        featureCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const angleX = (y - centerY) / 25;
+                const angleY = (centerX - x) / 25;
+
+                card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) scale3d(1.05, 1.05, 1.05)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+            });
+        });
+    </script>
+</body>
+</html>
